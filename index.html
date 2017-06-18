@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html>
+	<head>
+
+		<title>Rock Paper Scissors</title>
+
+		<!-- jQuery library -->
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+
+		<!-- Latest compiled and minified CSS -->
+		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+
+		<!-- Bootstrap Latest compiled JavaScript -->
+		<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+
+		<!-- Custom stylesheet -->
+		<link rel="stylesheet" href="./assets/css/style.css">
+
+		<!-- Link to Firebase -->
+		<script src="https://www.gstatic.com/firebasejs/4.1.2/firebase.js"></script>
+
+
+	</head>
+
+	<body>
+	
+		<div class="container">
+
+			<div class="row text-center">
+				<h1>Multiplayer "Rock, Paper, Scissors"</h1>
+			</div>
+
+			<div class="row text-center">
+				<input type="text" id="username-input">
+				<button id="start-button">Start</button>
+			</div>
+
+			<div class="row text-center">
+				Water, grass, and fire!
+			</div>
+
+			<div class="row">
+				
+				<div class="col-s-6 col-md-6 col-lg-6 pull-left text-center">
+
+						<div>
+							<img src="./assets/images/waiting.gif" id="player1-weapon-display">
+						</div>
+						<div>
+							Player 1:
+							<span id="player-1-name">NAME</span>
+						</div>
+						<div>
+							<span id="player-1-wins">W: </span><span>0, </span>
+							<span id="player-1-losses">L: </span><span>0</span>
+						</div>
+
+				</div>
+
+				<div class="col-s-6 col-md-6 col-lg-6 text-center">
+					
+					<div>
+						<img src="./assets/images/waiting.gif" id="player2-weapon-display">
+					</div>
+					<div>
+						Player 2:
+						<span id="player-2-name">NAME</span>
+					</div>
+					<div>
+						<span id="player-2-wins">W: </span><span>0, </span>
+						<span id="player-2-losses">L: </span><span>0</span>
+					</div>
+
+				</div>
+
+			</div>
+
+			<div class="row text-center">
+				
+				<div class="col-sm-12 col-md-12 col-lg-12"><h2>CHOOSE YOUR WEAPON</h2></div>
+				<button class="btn btn-danger weapon-button" id="fire-button">FIRE</button>
+				<button class="btn btn-primary weapon-button" id="water-button">WATER</button>
+				<button class="btn btn-success weapon-button" id="grass-button">GRASS</button>
+				
+
+			</div>
+
+			<div class="row">
+				<div class="col-sm-12 col-md-8 col-md-offset-2 col-lg-8 col-lg-offset-2">
+					
+					<label for="chat-box">Chatbox</label>
+					<textarea readonly class="form-control" rows="6" id="chat-box"></textarea>
+					<div class="form-group text-center">
+						<input type="text" size="40" id="chatbox-input">
+						<button id="chat-send-button">Send</label>
+					</div>
+			</div>
+
+		</div>	
+
+	</body>
+	
+	<!-- Custom Javascript File -->
+	<script src="./assets/javascript/app.js"></script>
+
+</html>

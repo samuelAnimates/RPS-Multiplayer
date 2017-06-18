@@ -1,0 +1,71 @@
+.answer-choice:hover {
+
+	color: white;
+	text-shadow: -1px 0 black, 0 1px black, 1px 0 black, 0 -1px black;
+}
+
+.bg-cheese{
+
+	background-image: url("../images/cheese.jpg");
+
+}
+
+.bg-space{
+
+	background-image: url("../images/space.jpg");
+
+}
+
+.bg-white{
+
+	background-color: white;
+}
+
+.bold-font {
+
+	font-weight: bold;
+
+}
+
+.brdr-radius-25px {
+	
+	border-radius: 25px;
+
+}
+
+.font-size-20px{
+
+	font-size: 20px;
+
+}
+
+.max-h-200px {
+
+	max-height: 200px;
+
+}
+
+.img-fluid {
+
+	max-width: 100%;
+	height: auto;
+
+}
+
+.opacity-80{
+
+	opacity: 0.80;
+
+}
+
+.outline-white {
+
+	text-shadow: -2px 0 white, 0 2px white, 2px 0 white, 0 -2px white;
+
+}
+
+.pad-10px{
+
+	padding: 10px;
+
+}
