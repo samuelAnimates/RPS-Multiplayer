@@ -262,6 +262,8 @@ database.ref().on("value", function(snapshot) {
 	    	$("#player-2-wins").html(localPlayer2.winsCount);
 	    	$("#player-2-losses").html(localPlayer2.lossesCount);
 
+	    	!isTheRoomFull;
+
     	}
 
     	else if (localPlayer1.username != "null" && localPlayer2.username === "null"){
@@ -273,6 +275,8 @@ database.ref().on("value", function(snapshot) {
     		$("#player-2-name").html("NO ONE HERE YET");
     		$("#player-2-wins").html("n/a");
     		$("#player-2-losses").html("n/a");
+
+    		!isTheRoomFull;
 
     	}
 
@@ -294,8 +298,8 @@ database.ref().on("value", function(snapshot) {
 
 		displayPlayer2Weapon(localPlayer2.weaponPick);
 		$("#player-2-name").html(localPlayer2.username);
-		$("#player-2-wins").html(localPlayer2.username);
-		$("#player-2-losses").html(localPlayer2.username);
+		$("#player-2-wins").html(localPlayer2.winsCount);
+		$("#player-2-losses").html(localPlayer2.lossesCount);
 
 		if (localPlayer1.weaponPick != "null" && localPlayer2.weaponPick != "null"){
 
