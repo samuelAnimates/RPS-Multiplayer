@@ -1,7 +1,7 @@
 
 
-
 firebase.initializeApp(config);
+
 // global variable acting as shorthand for our firebase database
 var database = firebase.database();
 
@@ -227,25 +227,59 @@ database.ref().on("value", function(snapshot) {
     localPlayer1 = snapshot.val().player1; 
     localPlayer2 = snapshot.val().player2;
 
-    //
-    if ( !isTheRoomFull && localPlayer1.username != "null" && localPlayer2.username != "null"){
-
-    	isTheRoomFull;
-
+    //The user's weapon choice will always be displayed, placeholder gif if it's null
     	displayPlayer1Weapon(localPlayer1.weaponPick);
-    	$("#player-1-name").html(localPlayer1.username);
-    	$("#player-1-wins").html(localPlayer1.winsCount);
-    	$("#player-1-losses").html(localPlayer1.lossesCount);
-
     	displayPlayer2Weapon(localPlayer2.weaponPick);
-    	$("#player-2-name").html(localPlayer2.username);
-    	$("#player-2-wins").html(localPlayer2.winsCount);
-    	$("#player-2-losses").html(localPlayer2.lossesCount);
+
+    //
+    if ( !isTheRoomFull ){
+
+    	
+
+    	//change globa variable tor reflect app state if the game is being played by 2 players
+    	if (localPlayer1.username != "null" && localPlayer2.username != "null"){
+
+    		isTheRoomFull;
+
+			$("#player-1-name").html(localPlayer1.username);
+	    	$("#player-1-wins").html(localPlayer1.winsCount);
+	    	$("#player-1-losses").html(localPlayer1.lossesCount);
+
+	    	$("#player-2-name").html(localPlayer2.username);
+	    	$("#player-2-wins").html(localPlayer2.winsCount);
+	    	$("#player-2-losses").html(localPlayer2.lossesCount);
+
+    	}
+
+    	//otherwise, fill html page with placeholders where applicable
+    	else if (localPlayer1.username === "null" && localPlayer2.username != "null"){
+
+    		$("#player-1-name").html("NO ONE HERE YET");
+    		$("#player-1-wins").html("n/a");
+    		$("#player-1-losses").html("n/a");
+
+    		$("#player-2-name").html(localPlayer2.username);
+	    	$("#player-2-wins").html(localPlayer2.winsCount);
+	    	$("#player-2-losses").html(localPlayer2.lossesCount);
+
+    	}
+
+    	else if (localPlayer1.username != "null" && localPlayer2.username === "null"){
+
+    		$("#player-1-name").html(localPlayer1.username);
+	    	$("#player-1-wins").html(localPlayer1.winsCount);
+	    	$("#player-1-losses").html(localPlayer1.lossesCount);
+
+    		$("#player-2-name").html("NO ONE HERE YET");
+    		$("#player-2-wins").html("n/a");
+    		$("#player-2-losses").html("n/a");
+
+    	}
+
 
     	if (localPlayer1.weaponPick != "null" && localPlayer2.weaponPick != "null"){
 
     		checkWhoWon(localPlayer1.weaponPick, localPlayer2.weaponPick);
-
 
     	}
 
@@ -262,6 +296,12 @@ database.ref().on("value", function(snapshot) {
 		$("#player-2-name").html(localPlayer2.username);
 		$("#player-2-wins").html(localPlayer2.username);
 		$("#player-2-losses").html(localPlayer2.username);
+
+		if (localPlayer1.weaponPick != "null" && localPlayer2.weaponPick != "null"){
+
+    		checkWhoWon(localPlayer1.weaponPick, localPlayer2.weaponPick);
+
+    	}
 
 	}
 
@@ -291,7 +331,7 @@ $("#start-button").on("click", function() {
     }
 
     //otherwise, assign local user to Player 1 or Player 2, with preference to fill the P1 spot first
-    else if (localPlayer1.username == "null"){
+    else if (localPlayer1.username === "null"){
 
     	//Assign local user to Player 1
     	database.ref("player1").update({
@@ -308,7 +348,7 @@ $("#start-button").on("click", function() {
 
     }
 
-    else{
+    else if (localPlayer2.username === "null"){
 
     	//Assign local user to Player 2
     	database.ref("player2").update({
@@ -320,7 +360,7 @@ $("#start-button").on("click", function() {
     	userPlayerAssignment = 2;
 
     	//update html
-    	$("#player-2-name").html(localPlayer1.username);
+    	$("#player-2-name").html(localPlayer2.username);
     	$("#name-entry-div").remove();
 
     	isTheRoomFull = true;
