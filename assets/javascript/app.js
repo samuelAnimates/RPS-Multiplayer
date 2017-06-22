@@ -20,16 +20,32 @@ var localPlayer2 = {
 	weaponPick: null
 };
 
-//app status tracking variables
-var userPlayerAssignment = 0;
-var isWeaponPickedLocally = false;
-var isOpponentWeaponPickedLocally = false;
-var localUserChoice = null;
-var isTheRoomFull = false;
+
+var userPlayerAssignment;
+var isWeaponPickedLocally;
+var isOpponentWeaponPickedLocally;
+var localUserChoice;
+var isTheRoomFull;
+var localChatRoom;
+var localChatRoomTemp;
+
+
+function initializeGame(){
+
+	//app status tracking variables
+	userPlayerAssignment = 0;
+	isWeaponPickedLocally = false;
+	isOpponentWeaponPickedLocally = false;
+	localUserChoice = null;
+	isTheRoomFull = false;
+	localChatRoom;
+	localChatRoomTemp;
+
+};
 
 
 /*function that takes in both players' choices, updates W/L counts accordingly,
-and nulls their weapon picks
+and nulls their weapon picks so they can play again
 */
 function checkWhoWon(player1weapon, player2weapon){
 
@@ -40,15 +56,12 @@ function checkWhoWon(player1weapon, player2weapon){
     localPlayer2.lossesCount++;
 
     //log results to firebase and null weapon choices
-    database.ref("player1").update({
-		winsCount: localPlayer1.winsCount,
-		weaponPick: "null"
-	});
-
-    database.ref("player2").update({
-		lossesCount: localPlayer2.lossesCount,
-		weaponPick: "null"
-	});
+    database.ref().update({
+		"player1/winsCount": localPlayer1.winsCount,
+		"player1/weaponPick": "null",
+		"player2/lossesCount": localPlayer2.lossesCount,
+		"player2/weaponPick": "null"
+	}); 
 
 	//Print results to page
     $("#results-span").html("RESULT: P1 WINS!");
@@ -62,14 +75,11 @@ function checkWhoWon(player1weapon, player2weapon){
     localPlayer2.winsCount++;
 
     //log results to firebase and null weapon choices
-    database.ref("player1").update({
-		winsCount: localPlayer1.lossesCount,
-		weaponPick: "null"
-	});
-
-    database.ref("player2").update({
-		lossesCount: localPlayer2.winsCount,
-		weaponPick: "null"
+    database.ref().update({
+		"player1/lossesCount": localPlayer1.lossesCount,
+		"player1/weaponPick": "null",
+		"player2/winsCount": localPlayer2.winsCount,
+		"player2/weaponPick": "null"
 	});
 
     //Print results to page
@@ -82,14 +92,11 @@ function checkWhoWon(player1weapon, player2weapon){
     localPlayer2.winsCount++;
 
     //log results to firebase and null weapon choices
-    database.ref("player1").update({
-		winsCount: localPlayer1.lossesCount,
-		weaponPick: "null"
-	});
-
-    database.ref("player2").update({
-		lossesCount: localPlayer2.winsCount,
-		weaponPick: "null"
+    database.ref().update({
+		"player1/lossesCount": localPlayer1.lossesCount,
+		"player1/weaponPick": "null",
+		"player2/winsCount": localPlayer2.winsCount,
+		"player2/weaponPick": "null"
 	});
 
     //Print results to page
@@ -104,15 +111,12 @@ function checkWhoWon(player1weapon, player2weapon){
     localPlayer2.lossesCount++;
 
     //log results to firebase and null weapon choices
-    database.ref("player1").update({
-		winsCount: localPlayer1.winsCount,
-		weaponPick: "null"
-	});
-
-    database.ref("player2").update({
-		lossesCount: localPlayer2.lossesCount,
-		weaponPick: "null"
-	});
+    database.ref().update({
+		"player1/winsCount": localPlayer1.winsCount,
+		"player1/weaponPick": "null",
+		"player2/lossesCount": localPlayer2.lossesCount,
+		"player2/weaponPick": "null"
+	}); 
 
     //Print results to page
     $("#results-span").html("RESULT: P1 WINS!");
@@ -126,14 +130,11 @@ function checkWhoWon(player1weapon, player2weapon){
     localPlayer2.winsCount++;
 
     //log results to firebase and null weapon choices
-    database.ref("player1").update({
-		winsCount: localPlayer1.lossesCount,
-		weaponPick: "null"
-	});
-
-    database.ref("player2").update({
-		lossesCount: localPlayer2.winsCount,
-		weaponPick: "null"
+    database.ref().update({
+		"player1/lossesCount": localPlayer1.lossesCount,
+		"player1/weaponPick": "null",
+		"player2/winsCount": localPlayer2.winsCount,
+		"player2/weaponPick": "null"
 	});
 
     //Print results to page
@@ -142,20 +143,19 @@ function checkWhoWon(player1weapon, player2weapon){
   }
 
   else if ( (player1weapon === "fire") && (player2weapon === "grass") ){
-    //log outcome locally
-    localPlayer1.winsCount++;
-    localPlayer2.lossesCount++;
+    
+   
+	//log outcome locally
+	localPlayer1.winsCount++;
+	localPlayer2.lossesCount++;
 
     //log results to firebase and null weapon choices
-    database.ref("player1").update({
-		winsCount: localPlayer1.winsCount,
-		weaponPick: "null"
-	});
-
-    database.ref("player2").update({
-		lossesCount: localPlayer2.lossesCount,
-		weaponPick: "null"
-	});
+    database.ref().update({
+			"player1/winsCount": localPlayer1.winsCount,
+			"player1/weaponPick": "null",
+			"player2/lossesCount": localPlayer2.lossesCount,
+			"player2/weaponPick": "null"
+	}); 
 
     //Print results to page
     $("#results-span").html("RESULT: P1 WINS!");
@@ -193,8 +193,14 @@ function displayPlayer1Weapon(weaponchoice){
 		$("#player1-weapon-display").attr("src", "./assets/images/fire.png");
 	}
 
-	else{
+	else if (weaponchoice === "fire"){
 		$("#player1-weapon-display").attr("src", "./assets/images/water.png");
+	}
+
+	else {	
+
+		alert("SORRY, THERE'S BEEN AN ERROR. PLEASE REFRESH YOUR PAGE AND RESTART THE GAME");
+
 	}
 
 }
@@ -214,11 +220,47 @@ function displayPlayer2Weapon(weaponchoice){
 		$("#player2-weapon-display").attr("src", "./assets/images/fire.png");
 	}
 
-	else{
+	else if (weaponchoice === "water"){
 		$("#player2-weapon-display").attr("src", "./assets/images/water.png");
 	}
 
+	else {	
+
+		alert("SORRY, THERE'S BEEN AN ERROR. PLEASE REFRESH YOUR PAGE AND RESTART THE GAME");
+
+	}
+
 }
+
+/*============================================================================================*/
+
+initializeGame();
+
+$("#clear-button").on("click", function() {
+
+	database.ref().update({
+    	"player1/lossesCount": 0,
+    	"player1/username": "null",
+    	"player1/weaponPick": "null",
+    	"player1/winsCount": 0,
+    	"player2/lossesCount": 0,
+    	"player2/username": "null",
+    	"player2/weaponPick": "null",
+    	"player2/winsCount": 0
+    });
+
+	$("#player-1-name").html("NO ONE HERE YET");
+    $("#player-1-wins").html("n/a");
+    $("#player-1-losses").html("n/a");
+
+    $("#player-2-name").html("NO ONE HERE YET");
+    $("#player-2-wins").html("n/a");
+    $("#player-2-losses").html("n/a");
+
+    !isTheRoomFull;
+
+
+});
 
 
 database.ref().on("value", function(snapshot) {     
@@ -227,6 +269,16 @@ database.ref().on("value", function(snapshot) {
     localPlayer1 = snapshot.val().player1; 
     localPlayer2 = snapshot.val().player2;
 
+    //update chatroom
+    localChatRoomTemp = snapshot.val().messages;
+
+    if (localChatRoomTemp != localChatRoom){
+
+    	localChatRoom = localChatRoomTemp;
+    	$("#chat-box").text(localChatRoom);
+
+    }
+
     //The user's weapon choice will always be displayed, placeholder gif if it's null
     	displayPlayer1Weapon(localPlayer1.weaponPick);
     	displayPlayer2Weapon(localPlayer2.weaponPick);
@@ -234,10 +286,9 @@ database.ref().on("value", function(snapshot) {
     //
     if ( !isTheRoomFull ){
 
-    	
 
-    	//change globa variable tor reflect app state if the game is being played by 2 players
-    	if (localPlayer1.username != "null" && localPlayer2.username != "null"){
+    	//change global variable to reflect app state if the game is being played by 2 players
+    	if ( (localPlayer1.username != "null") && (localPlayer2.username != "null") ){
 
     		isTheRoomFull;
 
@@ -252,7 +303,7 @@ database.ref().on("value", function(snapshot) {
     	}
 
     	//otherwise, fill html page with placeholders where applicable
-    	else if (localPlayer1.username === "null" && localPlayer2.username != "null"){
+    	else if ( (localPlayer1.username === "null") && (localPlayer2.username != "null") ){
 
     		$("#player-1-name").html("NO ONE HERE YET");
     		$("#player-1-wins").html("n/a");
@@ -266,7 +317,7 @@ database.ref().on("value", function(snapshot) {
 
     	}
 
-    	else if (localPlayer1.username != "null" && localPlayer2.username === "null"){
+    	else if ( (localPlayer1.username != "null") && (localPlayer2.username === "null") ){
 
     		$("#player-1-name").html(localPlayer1.username);
 	    	$("#player-1-wins").html(localPlayer1.winsCount);
@@ -280,17 +331,20 @@ database.ref().on("value", function(snapshot) {
 
     	}
 
-
+    	//run checkWhoWon function on the users' weapon choices if aplicable
     	if (localPlayer1.weaponPick != "null" && localPlayer2.weaponPick != "null"){
 
     		checkWhoWon(localPlayer1.weaponPick, localPlayer2.weaponPick);
+    		isWeaponPickedLocally = false;
 
     	}
 
 	}
 
+	//if the app has already detected two players in a previous turn, just directly print all player info to the page
 	else if (isTheRoomFull){
 
+		//update html page with 
 		displayPlayer1Weapon(localPlayer1.weaponPick);
 		$("#player-1-name").html(localPlayer1.username);
 		$("#player-1-wins ").html(localPlayer1.winsCount);
@@ -301,9 +355,11 @@ database.ref().on("value", function(snapshot) {
 		$("#player-2-wins").html(localPlayer2.winsCount);
 		$("#player-2-losses").html(localPlayer2.lossesCount);
 
+		//run checkWhoWon function on the users' weapon choices if aplicable
 		if (localPlayer1.weaponPick != "null" && localPlayer2.weaponPick != "null"){
 
     		checkWhoWon(localPlayer1.weaponPick, localPlayer2.weaponPick);
+    		isWeaponPickedLocally = false;
 
     	}
 
@@ -401,7 +457,7 @@ $(".weapon-button").on("click", function() {
 		}
 
 		//User picks Water, their choice is logged in firebase and the html page is updated
-		else {
+		else if ( !isWeaponPickedLocally && buttonPressed == "water-button" ){
 			//Store their choice locally when they pick a weapon 
 			localUserChoice = "water";
 			isWeaponPickedLocally = true;
