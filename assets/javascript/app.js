@@ -151,10 +151,10 @@ function checkWhoWon(player1weapon, player2weapon){
 
     //log results to firebase and null weapon choices
     database.ref().update({
-			"player1/winsCount": localPlayer1.winsCount,
-			"player1/weaponPick": "null",
-			"player2/lossesCount": localPlayer2.lossesCount,
-			"player2/weaponPick": "null"
+		"player1/winsCount": localPlayer1.winsCount,
+		"player1/weaponPick": "null",
+		"player2/lossesCount": localPlayer2.lossesCount,
+		"player2/weaponPick": "null"
 	}); 
 
     //Print results to page
@@ -193,15 +193,10 @@ function displayPlayer1Weapon(weaponchoice){
 		$("#player1-weapon-display").attr("src", "./assets/images/fire.png");
 	}
 
-	else if (weaponchoice === "fire"){
+	else if (weaponchoice === "water"){
 		$("#player1-weapon-display").attr("src", "./assets/images/water.png");
 	}
 
-	else {	
-
-		alert("SORRY, THERE'S BEEN AN ERROR. PLEASE REFRESH YOUR PAGE AND RESTART THE GAME");
-
-	}
 
 }
 
@@ -222,12 +217,6 @@ function displayPlayer2Weapon(weaponchoice){
 
 	else if (weaponchoice === "water"){
 		$("#player2-weapon-display").attr("src", "./assets/images/water.png");
-	}
-
-	else {	
-
-		alert("SORRY, THERE'S BEEN AN ERROR. PLEASE REFRESH YOUR PAGE AND RESTART THE GAME");
-
 	}
 
 }
@@ -280,8 +269,8 @@ database.ref().on("value", function(snapshot) {
     }
 
     //The user's weapon choice will always be displayed, placeholder gif if it's null
-    	displayPlayer1Weapon(localPlayer1.weaponPick);
-    	displayPlayer2Weapon(localPlayer2.weaponPick);
+    displayPlayer1Weapon(localPlayer1.weaponPick);
+    displayPlayer2Weapon(localPlayer2.weaponPick);
 
     //
     if ( !isTheRoomFull ){
