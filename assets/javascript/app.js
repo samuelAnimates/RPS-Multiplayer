@@ -1,7 +1,5 @@
 
 
-firebase.initializeApp(config);
-
 // global variable acting as shorthand for our firebase database
 var database = firebase.database();
 
@@ -225,6 +223,68 @@ function displayPlayer2Weapon(weaponchoice){
 
 initializeGame();
 
+//
+$("#chat-send-button").on("click", function(){
+
+	if (userPlayerAssignment === 0){
+
+		alert("PLEASE ENTER A USERNAME FIRST.");
+	}
+
+
+	else if ( $("#chatbox-input").val().length > 144 ){
+
+		alert("CHAT MESSAGES MUST BE <= 144 characters");
+
+	}
+
+	else if (userPlayerAssignment === 1) {
+
+		var newMessage = {
+
+			sender: localPlayer1.username,
+			text: $("#chatbox-input").val()
+
+		}
+
+		// Get a key for a new Post.
+  		var newPostKey = database.ref().child('messages').push().key;
+  		// Write the new data to firebase
+  		var updates = {};
+  		updates['/messages/' + newPostKey] = newMessage;
+  		return firebase.database().ref().update(updates);
+
+  		//clear form after entry
+  		$("#chatbox-input").find('input:text').val('');
+
+	}
+
+	else if (userPlayerAssignment === 2) {
+
+		var newMessage = {
+
+			sender: localPlayer2.username,
+			text: $("#chatbox-input").val()
+
+		}
+
+		// Get a key for a new Post.
+  		var newPostKey = database.ref().child('messages').push().key;
+  		// Write the new data to firebase
+  		var updates = {};
+  		updates['/messages/' + newPostKey] = newMessage;
+  		return firebase.database().ref().update(updates);
+
+  		//clear form after entry
+  		$("#chatbox-input").val('');
+
+	}
+
+	
+
+});
+
+//function that nulls all player data in firebase and adjusts the html appropriately
 $("#clear-button").on("click", function() {
 
 	database.ref().update({
